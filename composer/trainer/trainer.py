@@ -1904,6 +1904,7 @@ class Trainer:
 
         # Cache the device batch, because `self.state.batch` gets overridden in microbatching loop
         device_batch = self.state.batch
+        log.debug(f'device_batch: ', device_batch)
 
         # Retry until we successfully complete training and return loss
         while True:
