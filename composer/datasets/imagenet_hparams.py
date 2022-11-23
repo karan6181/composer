@@ -163,11 +163,12 @@ class StreamingImageNet1kHparams(DatasetHparams):
                 # if requested (by specifying a size > 0)
                 if self.resize_size > 0:
                     transform.append(transforms.Resize(self.resize_size))
+                transform.append(transforms.CenterCrop(self.crop_size))
                 # always include RandomResizedCrop and RandomHorizontalFlip
-                transform += [
-                    transforms.RandomResizedCrop(self.crop_size, scale=(0.08, 1.0), ratio=(0.75, 4.0 / 3.0)),
-                    transforms.RandomHorizontalFlip()
-                ]
+                #transform += [
+                #    transforms.RandomResizedCrop(self.crop_size, scale=(0.08, 1.0), ratio=(0.75, 4.0 / 3.0)),
+                #    transforms.RandomHorizontalFlip()
+                #]
             else:
                 if self.resize_size > 0:
                     transform.append(transforms.Resize(self.resize_size))
