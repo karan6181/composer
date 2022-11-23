@@ -1742,6 +1742,9 @@ class Trainer:
                             self._rng_state = None
                         continue
 
+                    print(f'batch_idx: {batch_idx}')
+                    print(f'type(self.state.batch): {type(self.state.batch)}')
+                    print(f'self.state.batch: {self.state.batch}')
                     self.state.batch = self._device.batch_to_device(self.state.batch)
                     self.state.batch = self._train_data_spec.device_transforms(self.state.batch)
                     rank_num_samples = self._train_data_spec.get_num_samples_in_batch(self.state.batch)
@@ -1904,7 +1907,7 @@ class Trainer:
 
         # Cache the device batch, because `self.state.batch` gets overridden in microbatching loop
         device_batch = self.state.batch
-        log.debug(f'device_batch: ', device_batch)
+        #log.debug(f'device_batch: ', device_batch)
 
         # Retry until we successfully complete training and return loss
         while True:
