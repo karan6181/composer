@@ -626,6 +626,7 @@ class State(Serializable):
             torch.nn.modules.utils.consume_prefix_in_state_dict_if_present(state_dict['model'], 'module.')
 
         with get_fsdp_rank0_cpu_save_context(self.model) if self.fsdp_enabled else contextlib.nullcontext():
+            logger.debug(f'Inside load_model_state with strict as {strict}')
             missing_keys, unexpected_keys = self.model.load_state_dict(state_dict['model'], strict=strict)
         if len(missing_keys) > 0:
             logger.warning(f"Found these missing keys in the checkpoint: {', '.join(missing_keys)}")
@@ -724,6 +725,7 @@ class State(Serializable):
             if attribute_name == 'dataloader_state':
                 self.load_dataloader_state(serialized_value)
             elif attribute_name == 'model':
+                logger.debug('self.load_model_state with strict=True')
                 self.load_model_state(state, strict=strict)
             elif attribute_name == 'optimizers':
                 self.load_optim_state(state)

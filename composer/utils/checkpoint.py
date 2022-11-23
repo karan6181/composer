@@ -405,7 +405,7 @@ def _restore_checkpoint(
         state.load_model_state(state_dict['state'], strict=strict_model_weights)
 
     if not load_weights_only:
-        state.load_state_dict(state_dict['state'])
+        state.load_state_dict(state_dict['state'], strict=strict_model_weights)
         return state_dict['rng']
 
 
