@@ -1744,7 +1744,7 @@ class Trainer:
 
                     print(f'batch_idx: {batch_idx}')
                     print(f'type(self.state.batch): {type(self.state.batch)}')
-                    print(f'self.state.batch[1]: {self.state.batch[1]}')
+                    #print(f'self.state.batch[1]: {self.state.batch[1]}')
                     self.state.batch = self._device.batch_to_device(self.state.batch)
                     self.state.batch = self._train_data_spec.device_transforms(self.state.batch)
                     rank_num_samples = self._train_data_spec.get_num_samples_in_batch(self.state.batch)
