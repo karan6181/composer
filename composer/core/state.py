@@ -380,6 +380,7 @@ class State(Serializable):
         self._train_dataloader = train_dataloader
         if self.dataloader_state:
             if hasattr(self._train_dataloader, 'load_state_dict'):
+                logger.debug(f'Found load_state_dict in self._train_dataloader: {self._train_dataloader}')
                 self._train_dataloader.load_state_dict(self.dataloader_state['train'])  # pyright: ignore
                 self.dataloader_resumption['train'] = True
             self.dataloader_state['train'] = None
@@ -532,6 +533,7 @@ class State(Serializable):
             for evaluator in self._evaluators:
                 dataloader = self._dataloader_of(evaluator)
                 if hasattr(dataloader, 'load_state_dict') and evaluator.label in state:
+                    logger.debug(f'Found load_state_dict in self._dataloader_of(evaluator): {dataloader}')
                     dataloader.load_state_dict(state[evaluator.label])  # pyright: ignore
                 # del state[evaluator.label]
             del self.dataloader_state['eval']
@@ -570,6 +572,7 @@ class State(Serializable):
                 if isinstance(state, dict):
                     state['sample_in_epoch'] = 0
                 obj['eval'][evaluator.label] = state
+        logger.debug(f'dataloader_state_dict: {obj}')
         return obj
 
     def state_dict(self) -> Dict[str, Any]:
@@ -680,6 +683,7 @@ class State(Serializable):
 
     def load_dataloader_state(self, obj: Dict[str, Any]) -> None:
         self.dataloader_state = obj
+        logger.debug(f'load_dataloader_state -> self.dataloader_state: {self.dataloader_state}')
 
         dataloader = self._dataloader_of(self.train_dataloader)
         if hasattr(dataloader, 'load_state_dict'):
