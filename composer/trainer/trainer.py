@@ -1720,9 +1720,9 @@ class Trainer:
             reproducibility.load_rng_state(self._rng_state)
             self._rng_state = None
 
-        self.logger.debug('Before calling self.state.model.train()')
+        log.debug('Before calling self.state.model.train()')
         self.state.model.train()
-        self.logger.debug('After calling self.state.model.train()')
+        log.debug('After calling self.state.model.train()')
         finished_epoch_early = False
         last_wct = datetime.datetime.now()
 
