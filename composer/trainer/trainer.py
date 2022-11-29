@@ -1675,6 +1675,7 @@ class Trainer:
                     dataloader.sampler.set_epoch(epoch)
                 for _ in dataloader:
                     break
+        log.debug('dataloaders spinning DONE')
 
     def _accumulate_time_across_ranks(
         self,
@@ -1719,7 +1720,9 @@ class Trainer:
             reproducibility.load_rng_state(self._rng_state)
             self._rng_state = None
 
+        logger.debug('Before calling self.state.model.train()')
         self.state.model.train()
+        logger.debug('After calling self.state.model.train()')
         finished_epoch_early = False
         last_wct = datetime.datetime.now()
 
