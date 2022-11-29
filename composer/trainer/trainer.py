@@ -1733,10 +1733,14 @@ class Trainer:
                     self.logger.log_metrics({'epoch': int(self.state.timestamp.epoch)})
 
                 dataloader = self.state.dataloader
+                log.debug('self.state.dataloader')
                 if isinstance(dataloader, DataLoader) and isinstance(dataloader.sampler, DistributedSampler):
+                    log.debug('not a DistributedSampler')
                     dataloader.sampler.set_epoch(int(self.state.timestamp.epoch))
 
+                log.debug('before iter')
                 for batch_idx, self.state.batch in enumerate(self._iter_dataloader(TrainerMode.TRAIN)):
+                    log.debug('After iter')
                     # Don't spin if dataloader handles it internally. Otherwise, if resuming, skip dataloader forward
                     if 'train' not in self.state.dataloader_resumption and batch_idx < int(self.state.timestamp.batch_in_epoch):
                         # Restore the RNG state immediately before the next batch is yielded from the dataloader
