@@ -1662,8 +1662,11 @@ class Trainer:
             dataloader = evaluator.dataloader.dataloader
             if isinstance(dataloader, DataLoader) and isinstance(dataloader.sampler, DistributedSampler):
                 dataloader.sampler.set_epoch(0)
+            log.debug(f'_spin_dataloaders: evaluator: {evaluator.label} {eval_state}')
             if evaluator.label not in eval_state:
+                log.debug('evaluator.label not in eval_state')
                 for _ in dataloader:
+                    log.debug('_spin_dataloaders: iterate over eval dataloader')
                     break
 
         # spin the train dataloader's sampler to get to the state of the desired epoch
@@ -1673,7 +1676,9 @@ class Trainer:
             for epoch in range(int(self.state.timestamp.epoch)):
                 if isinstance(dataloader, DataLoader) and isinstance(dataloader.sampler, DistributedSampler):
                     dataloader.sampler.set_epoch(epoch)
+                log.debug('before train dataloader iterator')
                 for _ in dataloader:
+                    log.debug('_spin_dataloaders: iterate over train dataloader')
                     break
         log.debug('dataloaders spinning DONE')
 
@@ -1713,7 +1718,7 @@ class Trainer:
 
         use_grad_scaling = self._use_grad_scaling(self.state.precision, self.state.scaler)
 
-        #self._spin_dataloaders()
+        self._spin_dataloaders()
 
         if self.state.timestamp.batch_in_epoch == 0 and self._rng_state is not None:
             # only restore the rng state here if the step in the current epoch is zero.
