@@ -561,7 +561,7 @@ class State(Serializable):
 
         dataloader = self._dataloader_of(self.train_dataloader)
         if hasattr(dataloader, 'state_dict'):
-            obj['train'] = dataloader.state_dict(self.timestamp.sample_in_epoch)
+            obj['train'] = dataloader.state_dict(int(self.timestamp.sample_in_epoch))
 
         for evaluator in self.evaluators:
             dataloader = self._dataloader_of(evaluator)
