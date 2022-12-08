@@ -534,7 +534,7 @@ class State(Serializable):
         if isinstance(obj, DataSpec):
             obj = obj.dataloader
         if isinstance(obj, DataLoader):
-            return obj.dataset
+            return obj
         else:
             return None
 
