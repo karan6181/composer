@@ -561,7 +561,7 @@ class State(Serializable):
 
         dataloader = self._dataloader_of(self.train_dataloader)
         if hasattr(dataloader, 'state_dict'):
-            obj['train'] = dataloader.state_dict(int(self.timestamp.sample_in_epoch))
+            obj['train'] = dataloader.state_dict(int(self.timestamp.sample_in_epoch.value))
 
         for evaluator in self.evaluators:
             dataloader = self._dataloader_of(evaluator)
@@ -571,7 +571,7 @@ class State(Serializable):
                 if isinstance(state, dict):
                     state['sample_in_epoch'] = 0
                 obj['eval'][evaluator.label] = state
-        print('dataloader_state_dict: {obj}')
+        print(f'dataloader_state_dict: {obj}')
         return obj
 
     def state_dict(self) -> Dict[str, Any]:
