@@ -571,6 +571,7 @@ class State(Serializable):
                 if isinstance(state, dict):
                     state['sample_in_epoch'] = 0
                 obj['eval'][evaluator.label] = state
+        print('dataloader_state_dict: {obj}')
         return obj
 
     def state_dict(self) -> Dict[str, Any]:
@@ -699,6 +700,7 @@ class State(Serializable):
                 # which means they have one sample fetched in _spin_dataloaders before training
                 # starts. This avoids "CUDA error: initialization error" -- its not clear why.
                 # self.dataloader_resumption['eval'][evaluator.label] = True
+        print(f'load_dataloader_state: {obj}')
 
     def load_state_dict(self, state: Dict[str, Any], strict: bool = False):
         """Loads the state.
