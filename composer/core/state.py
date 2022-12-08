@@ -517,7 +517,7 @@ class State(Serializable):
             obj = obj.dataloader
         if isinstance(obj, DataSpec):
             obj = obj.dataloader
-        return obj
+        return obj.dataset
 
     @property
     def evaluators(self):
@@ -561,6 +561,7 @@ class State(Serializable):
         dataloader = self._dataloader_of(self.train_dataloader)
         if hasattr(dataloader, 'state_dict'):
             obj['train'] = dataloader.state_dict()  # pyright: ignore
+            obj['train'] = dataset.state_dict(self.timestamp.sample_in_epoch)
 
         for evaluator in self.evaluators:
             dataloader = self._dataloader_of(evaluator)
