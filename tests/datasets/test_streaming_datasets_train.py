@@ -60,7 +60,6 @@ def test_streaming_datasets(num_workers, dataset, dataset_args, seed, tiny_bert_
 
     streaming_dataset = name_to_cls[dataset](local=local_path,
                                              split='val',
-                                             predownload=None,
                                              batch_size=4,
                                              **dataset_args)
 
