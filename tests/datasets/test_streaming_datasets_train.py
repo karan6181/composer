@@ -38,6 +38,8 @@ from tests.common import device, world_size
 def test_streaming_datasets(num_workers, dataset, dataset_args, seed, tiny_bert_tokenizer, tiny_bert_model, world_size,
                             device, tmp_path):
     # Need to initialize dist before we get to streaming, because streaming always uses NCCL
+    import time
+    time.sleep(1)
     if not dist.is_initialized():
         dist.initialize_dist(device=device)
 
@@ -78,5 +80,5 @@ def test_streaming_datasets(num_workers, dataset, dataset_args, seed, tiny_bert_
 
     # Necessary for some reason, otherwise streaming does not clean up properly, and tests fail
     trainer.close()
-    del dataloader
-    del streaming_dataset
+    #del dataloader
+    #del streaming_dataset
