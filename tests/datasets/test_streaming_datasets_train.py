@@ -79,5 +79,5 @@ def test_streaming_datasets(num_workers, dataset, dataset_args, seed, tiny_bert_
 
     # Necessary for some reason, otherwise streaming does not clean up properly, and tests fail
     trainer.close()
-    if trainer.state.train_dataloader and trainer.state.train_dataloader._iterator is not None:  # type: ignore [reportGeneralTypeIssues]
-        trainer.state.train_dataloader._iterator._shutdown_workers()  # type: ignore [reportGeneralTypeIssues]
+    del dataloader
+    del streaming_dataset
