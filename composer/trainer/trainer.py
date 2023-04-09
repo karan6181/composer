@@ -891,6 +891,7 @@ class Trainer:
         # Determine whether torch compile is enabled
         is_torch_2_0 = using_torch_2_0()
         if is_torch_2_0 and use_torch_compile:
+            print('Torch compile enabled')
             model = torch.compile(model)  # pyright: ignore
         elif not is_torch_2_0 and use_torch_compile:
             raise ValueError(f'torch.compile() is supported for PyTorch version >= 2.x.' +
